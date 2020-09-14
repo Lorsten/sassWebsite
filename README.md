@@ -1,5 +1,7 @@
 # Gulptemplate
 
 
+### Plugins used
+* chache
 
-### Author Olof Andersson
+#### Author Olof Andersson
