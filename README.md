@@ -11,4 +11,6 @@
 * sass - Used for compiling sass code
 * del Used for cleaning out the folder of old files
 
+p to start the system, simple type gulp in the when in the directory
+
 #### Author Olof Andersson
