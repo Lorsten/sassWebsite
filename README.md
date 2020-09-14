@@ -13,7 +13,7 @@
 * del Used for cleaning out the folder of old files
 
 ### System
-p to start the system, simple type gulp in the when in the directory.
+p to start the system, simply type gulp in the console while in the projects directory
 A couple of task is used.
 * CopyHTML - copy the html files to the public directory
 * jsTack - concat the js files and then uglify them folloed by moving them to pub folder.
