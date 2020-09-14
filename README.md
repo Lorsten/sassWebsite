@@ -1,4 +1,4 @@
-# Gulptemplate
+# Gulp template website
 
 ## Automatic
 The purpose of autmaticly task is to autmaticly handle things like minify both javascript and css file to make them smaller. Having seperate files to work with and autmatlicy move them to a public directory.
