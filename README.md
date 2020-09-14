@@ -4,14 +4,14 @@
 The purpose of autmaticly task is to autmaticly handle things like minify both javascript and css file to make them smaller. Having seperate files to work with and autmatlicy move them to a public directory.
 
 ### Plugins used
-* chache
-* BrowserSync
-* Uglify
-* concat
-* imagemin - Used for compressing images to reduced size
-* cleanCSS - Using it to minify the css code
-* sass - Used for compiling sass code
-* del Used for cleaning out the folder of old files
+* chache - Used in the project to cache compressed images, instead of redoing it everytime the task is ran.
+* BrowserSync - Plugin for reloading the page after changed in the code has been detected.
+* Uglify - Using it to minify fy javascript files to make the filesize smaller.
+* concat - Mergering together two js/css files.
+* imagemin - Using it to compress images to a smaller size.
+* cleanCSS - Using it to minify the css code.
+* sass - Used for compiling sass code.
+* del Used for cleaning out the folder of old files.
 
 ### System
 p to start the system, simply type gulp in the console while in the projects directory
