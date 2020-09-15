@@ -4,7 +4,7 @@
 The purpose of autmatic task is to automatically handle things like minify both javascript and css file to make them smaller instead of having to manually do it. Having seperate files to work with and automatically move them to a public directory. Beeing able to also automatically compress images instead of having to mannually to it yourself is a benefit. 
 
 ### Plugins used
-* chache - Used in the project to cache compressed images, instead of redoing it everytime the task is ran.
+* chache - Used in the project to cache compressed images, instead of redoing it every time the task is ran
 * BrowserSync - Plugin for reloading the page after changed in the code has been detected.
 * Uglify - Using it to minify fy javascript files to make the filesize smaller.
 * concat - Merging together two js/css files.
