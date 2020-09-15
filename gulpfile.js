@@ -6,13 +6,17 @@ const uglify = require('gulp-uglify-es').default;
 const browserSync = require('browser-sync').create();
 const reload = browserSync.reload;
 const sass = require('gulp-sass');
+const rename = require('gulp-rename');
 const del = require('del');
 const cleanCSS = require('gulp-clean-css');
 const imagemin = require('gulp-imagemin');
 const cache = require("gulp-cache");
 
 
-//Search paths
+/*
+Creating all the search paths for different file extensions.
+For the images only jpg, png and svg can be used.
+*/
 const files = {
     htmlPath: "src/**/*.html",
     cssPath: "src/**/*.css",
@@ -29,14 +33,14 @@ const clean = (done) => {
     done();
 }
 
-// a function for copying the hmtl files to pub
+// a function for copying the hmtl files to the public directory
 const copyHTML = () => {
     return src(files.htmlPath)
         .pipe(dest('pub'));
 }
 
 /*
-Clear the img folder in pub. 
+Function for Clearing the img folder in pub/images. 
 Used for deleting a image when the source image is deleted
 */
 const clearImages = (done) =>{
@@ -45,9 +49,11 @@ const clearImages = (done) =>{
 }
 
 /*
-Function for handling the images
-Using the plugin cache to cache the minify image so it doesn't have to repeat the process everytime this function is ran
-THe plugin imagemin is used to minify images
+Task for handling the images
+
+* Using the plugin cache to cache the compressed images so it doesn't have to repeat the process everytime this function is ran
+
+THe plugin imagemin is used to compress images with the setting interlaced to true for slower internet connections
 */
 const handleImg = () => {
     return src(files.imgPath)
@@ -57,8 +63,9 @@ const handleImg = () => {
         .pipe(dest('pub/images'));
 }
 /*
-Function for first cleaning the image folder using clearImages and then running handleIMG
-Using a callback to run each function after it's done
+Main task for handling omages
+*first the directory is cleaned using  the function clearImages and then running the task handleIMG
+Using a gulp series and a callback to run each task when a task is finished
 */
 const manageImages = (done) =>{
     return series(
@@ -72,7 +79,7 @@ const manageImages = (done) =>{
 
 /*
  Task for javascript files
- Merge js files and then minify 
+ Merge js files and then minify using the plugin uglify
  */
 const jsTask = () => {
     return src(files.jsPath)
@@ -89,10 +96,15 @@ const reloading = (done) => {
     done();
 }
 
-/* Task for running  the function 
-jstack aswell as reloading the page when the code has compiled usingh browsersync */
+/* Main task for javascript files.
+
+* jstack is ran first followed by the reloading function to reload the page.
+
+* A callback is used to run the task after each task is done
+
+*/
 const script = (done) => {
-    return gulp.series(
+    return series(
         jsTask,
         reloading,
         done => {
@@ -102,13 +114,13 @@ const script = (done) => {
 }
 
 /*
-Function for handling the css File 
+Task for handling the css File 
 
-*Merging two or more files into on with concat
+* Merging two or more files into one with the plugin concat
 
-Using cleanCSS to minify the file.
+* Using cleanCSS to minify the file.
 
-Then placing the file in pub/css
+* Then placing the file in pub/css
 */
 const cssTask = () => {
     return src(files.cssPath)
@@ -120,24 +132,24 @@ const cssTask = () => {
 
 /*
 Same as cssTask expect for sass
-* Merging two or more files into on with concat
 
-* Compile the files using the plugin sass
+* Compile the files using the plugin sass and using the option outputstyle compressed to minify the outputed file
+
+* Using the plugin gulp-rename to rename the source file to style.css
 
 * Using browsersync stream to reload the page after the file has been compiled
 */  
 const sassTask = () => {
     return src(files.sassPath)
-        .pipe(concat("style.css"))
-        .pipe(sass().once('error', sass.logError))
-        .pipe(cleanCSS())
+        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+        .pipe(rename('style.css'))
         .pipe(dest("pub/css"))
         .pipe(browserSync.stream());
 }
 
 /*
 Function for watching all the task.
-Setting up browsersync here to allow automatic reloading whenever a file is changed
+Setting up browsersync here to allow for automatic reloading whenever a file is changed
 */
 const watchTask = () => {
     browserSync.init({
@@ -148,7 +160,7 @@ const watchTask = () => {
     });
   
     /* watching the html files separately, 
-    and running a manual reload whenever the files changes using browsersync*/
+    and running a manual browsersync reload whenever the html files changes*/
     watch(files.htmlPath).on("change", series(copyHTML, reload));
 
     watch([files.cssPath, files.jsPath, files.sassPath,files.imgPath],
