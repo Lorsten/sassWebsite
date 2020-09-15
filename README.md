@@ -15,6 +15,7 @@ The purpose of autmatic task is to automatically handle things like minify both 
 * gulpe-rename is used for renaming the sass files to style .scss 
 
 ### System
+First run npm install in the project directory to install. 
 To start the system, simply type gulp in the console while in the projects directory
 
 #### Taskes used in the program
