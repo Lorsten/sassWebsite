@@ -12,6 +12,7 @@ The purpose of autmaticly task is to autmaticly handle things like minify both j
 * cleanCSS - Using it to minify the css code.
 * sass - Used for compiling sass code.
 * del Used for cleaning out the folder of old files.
+* gulpe-rename is used for renaming the file style .scss 
 
 ### System
 To start the system, simply type gulp in the console while in the projects directory
