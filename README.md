@@ -1,5 +1,5 @@
 # sassWebsite
 
-## A design for a finacial advice website using sass for styling
+## A design for a financial website design using sass for styling
 
 ### Author Olof Andersson
