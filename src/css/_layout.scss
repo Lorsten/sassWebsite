@@ -1,0 +1,395 @@
+@import 'variables';
+
+/*
+layout partial file used for all layout styles
+
+Importing the varaibles files
+*/
+
+body {
+    background-color: map-get($colors, primary);
+    position: relative;
+    overflow-x: hidden;
+}
+
+// Creating a placeholder for links used for a tags
+%link {
+    text-decoration: none;
+    color: map-get($colors-font, dark);
+}
+
+// Placeholder for ::After element with empty content
+%afterElementEmpty {
+    position: absolute;
+    content: "";
+    width: 100%;
+}
+
+
+header {
+    position: relative;
+    width: 100%;
+    grid-column: 1/13;
+
+    #header-top {
+        max-width: $maxWidth;
+        margin: 0 auto;
+        width: 90%;
+        position: relative;
+        // include the mixin for using display flex and row
+        @include flex(row);
+
+        h1 {
+            margin: 5% 0 0% 0;
+            // using map-get to get the color dark 
+            color: map-get($colors-font, dark);
+            font-size: 1.5em;
+            // include the mixin for using for media query
+            @include screen-size(phone) {
+                width: 80%;
+                margin-bottom: 5%;
+            }
+
+            @include screen-size(desktop) {
+                width: 30%;
+            }
+        }
+
+        nav {
+            margin: 5% 0 0% 0;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            padding: 2% 0 2% 0;
+
+            h2{
+                display: none;
+                @include screen-size(phone){
+                    display: block;
+                    width:80%;
+                    margin-left:10%;
+                }
+            }
+            // using a after element to fill the nav background the full with using calc
+            &:after {
+                // using Selector inheritance to get the styles from the placeholder
+                @extend %afterElementEmpty;
+                background-color: map-get($colors,fourth);
+                width: 100vw;
+                bottom: 0;
+                top: 0;
+                left: calc(50% - 50vw);
+                z-index: -5;
+            }
+
+            @include screen-size(desktop) {
+                right: 0;
+                background-color: map-get($colors,fourth);
+                left: 0;
+            }
+
+            // Style for hamburger-menu
+            @include screen-size(phone) {
+                margin: 0;
+                position: fixed;
+                height: 100vh;
+                width: 100vw;
+                top: 0;
+                right: -110%;
+                // using the desaturate color function
+                background-color: desaturate(map-get($colors, secondary), 5%);
+                text-align:left;
+                transition: 0.7s right linear;
+                z-index: 5;
+                &:after {
+                    display: none;
+                 }
+            }
+
+            ul {
+                list-style: none;
+                width: 100%;
+
+                @include screen-size(phone) {
+
+                    width:80%;
+                    margin-left:10%;
+                }
+
+                li {
+                    display: map-get($display, horizontal);
+                    padding: 0 2% 0 2%;
+
+                    @include screen-size(phone) {
+                        display: map-get($display, vertical);
+                        margin-top: 5%;
+                    }
+                }
+
+                .active {
+                    position: relative;
+
+                    &:after {
+                        @extend %afterElementEmpty;
+                        bottom: -50%;
+                        left: 0;
+                        border-bottom: 3px solid black;
+                    }
+                }
+
+                a {
+                    // inheritance link placeholder to get styles
+                    @extend %link;
+
+                    &:hover {
+                        color: darken(adjust-hue(map-get($colors, secondary), 15%), 2%);
+                    }
+                }
+
+            }
+        }
+    }
+
+    #header-container {
+        width: 90%;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+        padding: 2% 0 10% 0;
+        @include flex(column);
+
+        @include screen-size(desktop) {
+            max-width: $maxWidth;
+        }
+
+        background-image: url("../images/photo-1599687266725-0d4d52716b86.jpg");
+        background-size: cover;
+
+        h3 {
+            color: map-get($colors-font, light);
+            font-size: 1.3em;
+            margin-left: 2%;
+            margin-top: 20%;
+            width: 50%;
+        }
+
+        img {
+            width: 90%;
+            margin: 5% auto 5% auto;
+        }
+    }
+}
+
+// Full width div using calc margin left and right
+.box {
+    background-color: map-get($colors, secondary);
+    padding: 5% 0 5% 0;
+    grid-column: 1/13;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+
+    article {
+        max-width: $maxWidth;
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    // Set the color of all element inside the box. Using lighten color function to light the color up
+    * {
+        color: lighten(map-get($colors-font, dark), 5%);
+    }
+
+    h3 {
+        width: 100%;
+    }
+
+    p {
+        width: 100%;
+
+    }
+
+}
+
+.button-top {
+    // include the mixin for the  button with the secondary color and 10% width
+    @include button(map-get($colors, secondary), 10%);
+    margin-left: 2%;
+    padding: 1% 0 1% 0;
+
+}
+
+.button {
+    // inheritance.butotn-top to get the button style and then adjust it with margin and padding
+    @extend .button-top;
+    margin: 5% 0 5% 0;
+    padding:2.5% 0 2.5% 0;
+}
+
+#hamburger-menu {
+    width: 10%;
+    margin-top: 1%;
+    position: absolute;
+    right: 10vw;
+    top: 0%;
+    cursor: pointer;
+
+    @include screen-size(desktop) {
+        display: none;
+    }
+
+    @include screen-size(tablet) {
+        display: none;
+    }
+
+    div {
+        border-bottom: 4px solid map-get($colors-font, dark);
+        padding: 5% 0 5% 0;
+        margin: 5% 0 1% 0;
+    }
+
+}
+
+/*
+Wrapper with nested tags inside 
+*/
+#wrapper {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1% 1%;
+    max-width: $maxWidth;
+
+    section {
+        grid-column: 1/13;
+
+        @include screen-size(desktop) {
+            @include flex(row);
+        }
+
+        width: 100%;
+
+        h2 {
+            display: none;
+        }
+
+        article:not(.half) {
+            margin: 0 5% 5% auto;
+            width: 45%;
+            text-align: left;
+
+            @include screen-size(phone) {
+                width: 90%;
+            }
+
+            img {
+                @include screen-size(desktop) {
+                    width: 50%;
+                }
+
+                width: 100%;
+            }
+        }
+
+        .half {
+            @include screen-size(desktop) {
+                @include flex(row);
+                width: 100%;
+
+            }
+
+            width:90%;
+            margin: 0 auto 10% auto;
+
+            div {
+                @include screen-size(desktop) {
+                    width: 50%;
+                    margin-right: 5%;
+                }
+
+                width:100%;
+            }
+
+            h3 {
+                width: 100%;
+            }
+
+            img {
+                @include screen-size(desktop) {
+                    width: 45%;
+                }
+
+                width: 100%;
+            }
+        }
+    }
+
+
+}
+
+/*
+Footer 
+*/
+footer {
+    margin: 5% 0 0 0;
+    width: 100%;
+    padding: 5% 0 2% 0;
+    background-color: map-get($colors, third);
+
+
+    // Div used for setting a max width of everything inside
+    #footer-container {
+        @include screen-size(desktop) {
+            @include flex(row);
+            max-width: $maxWidth;
+            margin: 0 auto;
+        }
+    }
+
+    h3 {
+        text-align: center;
+        color: map-get($colors-font, light);
+        width: 100%;
+    }
+
+    ul {
+        @include screen-size(phone) {
+            width: 80%;
+            margin: 2% auto 5% auto;
+            text-align: left;
+        }
+
+        @include screen-size(desktop) {
+            width: 20%;
+            margin-left:5%;
+            text-align: left;
+        }
+
+        li {
+            display: map-get($display, vertical);
+            margin: 0.5% 0 0.5% 0;
+            color: map-get($colors-font, light);
+
+            &:first-child {
+                font-weight: bold;
+            }
+            // selected a class which begins with the name fa
+            a[class^="fa"] {
+                color:map-get($colors-font, dark);
+                font-size: 1.2em;
+                &:hover{
+                    color:lighten(map-get($colors, secondary),5%);
+                }
+              }
+        
+        }
+
+        a {
+            @extend %link;
+
+            &:hover {
+                color: darken(map-get($colors-font, light), 5%);
+            }
+        }
+    }
+}

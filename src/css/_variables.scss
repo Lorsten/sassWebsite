@@ -1,0 +1,71 @@
+/*
+Variables partial file
+
+*/
+// variable for max width
+$maxWidth: 1200px;
+
+/*Colors using maps for each color*/
+$colors:(
+    primary: #F1FAFF,
+    secondary: #6A9DE2,
+    third:#467EA0,
+    fourth: #CEE0EB
+);
+$colors-font:(
+    dark: black,
+    light:white,
+   
+);
+
+$display: (
+    horizontal: inline-block,
+    vertical: block
+);
+/*
+A mixin with conditon based on different screen in $size. Using media quriery for the diferent condinitions
+*/
+@mixin screen-size($size) {
+    @if $size == phone{
+        @media (max-width: 899px) { @content; }
+    }
+    @else if $size == desktop{
+        @media(min-width:900px) {@content;}
+    }
+    
+}
+
+/*
+Using mixin with a parameter for changing between row and column for flex
+*/
+@mixin flex($direction){
+    display:flex;
+    flex-wrap: wrap;
+    @if $direction == row{
+        flex-direction: row;
+    }
+    @else if $direction == column{
+        flex-direction: column;
+
+    }
+}
+
+/*
+a mixin for buttons where color and width can be decided with the parameters
+*/
+@mixin button($color, $width){
+    width:$width;
+    background-color: $color;
+    min-width: 200px;
+    text-align: center;
+    border-radius: 50em;
+    &:hover{
+        background-color:darken($color,15%);
+        transition: all 0.3s ease;
+    }
+    a {
+        text-decoration: none;
+        color: map-get($colors-font, light);
+
+    }
+}
